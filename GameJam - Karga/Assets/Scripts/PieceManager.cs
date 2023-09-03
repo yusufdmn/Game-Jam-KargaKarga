@@ -6,6 +6,8 @@ public class PieceManager : MonoBehaviour
 {
     private GameObject player;
 
+    [SerializeField] LevelManager levelManager;
+    [SerializeField] GameObject pieceUIPrefab;
     [SerializeField] RectTransform gameCanvasRect;
     [SerializeField] RectTransform panelRect;
     [SerializeField] InputManager inputManager;
@@ -40,7 +42,8 @@ public class PieceManager : MonoBehaviour
         }
         else if(collectedCount >= maxCollectedCount_Level_1){
             // Finish The Level
-            SceneManager.LoadScene(2);
+            levelManager.FinishLevel();
+            Time.timeScale = 0;
         }
     }
 
@@ -51,15 +54,18 @@ public class PieceManager : MonoBehaviour
         {
             if (hit.collider.CompareTag("piece"))
             {
-                Vector2 canvasPosition;
+            /*    Vector2 canvasPosition;
                 Vector2 mousePos = Input.mousePosition;
-                RectTransformUtility.ScreenPointToLocalPointInRectangle(gameCanvasRect, mousePosition, null, out canvasPosition);
+                RectTransformUtility.ScreenPointToLocalPointInRectangle(gameCanvasRect, mousePosition, Camera.main, out canvasPosition);
+
+                GameObject pieceUI = Instantiate(pieceUIPrefab, canvasPosition, Quaternion.identity, gameCanvasRect.transform);
 
 
-                Debug.Log(canvasPosition);
+                Debug.Log(canvasPosition);*/
                 CollectPiece(hit.collider.gameObject);
             }
         }
     }    
+
 }
 

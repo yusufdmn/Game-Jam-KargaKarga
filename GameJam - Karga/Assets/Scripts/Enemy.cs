@@ -58,12 +58,12 @@ public class Enemy : MonoBehaviour
     void Flip(){
         if(direction == Direction.Left){
             direction = Direction.Right;
-            transform.rotation = Quaternion.Euler(0, 180, 0);
+            transform.rotation = Quaternion.Euler(0, 0, 0);
             transform.Translate(Vector3.zero);
         }
         else{
             direction = Direction.Left;
-            transform.rotation = Quaternion.Euler(0, 0, 0);
+            transform.rotation = Quaternion.Euler(0, 180, 0);
             transform.Translate(Vector3.zero);
         }
     }
