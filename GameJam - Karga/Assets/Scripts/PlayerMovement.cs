@@ -10,7 +10,8 @@ public class PlayerMovement : MonoBehaviour
         Right,
         Up,
         Down,
-        Idle
+        Idle,
+        Attack
     }
 
     private bool isNearLadderUp;
@@ -18,19 +19,17 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 moveVector;
     private Vector2 leftVector = new Vector2(-1,0);
     private Vector2 rightVector = new Vector2(1,0);
-
-    public PlayerStatus currentStatus; // 0 = left, 1 = right, 2 = Up , 3 = Down, 4 = Idle
+    private Vector2 targetFloorPos;
 
 
     [SerializeField] private float speed;
+    [SerializeField] private float damage;
     [SerializeField] InputManager inputManager;
 
     [SerializeField] ScreenTransition screenTransition;
+    
 
-    Vector2 targetFloorPos;
-    void Start()
-    {
-    }
+    public PlayerStatus currentStatus; // 0 = left, 1 = right, 2 = Up , 3 = Down, 4 = Idle, 5 = Attack
 
 
     void Update()
@@ -42,25 +41,25 @@ public class PlayerMovement : MonoBehaviour
             ChangeDirectionToLeft();
         }
         else{
-            StoptMoving();
+            StopMoving();
         }
 
 
         if((Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))  && isNearLadderBottom && currentStatus != PlayerStatus.Up && currentStatus != PlayerStatus.Down){
             currentStatus = PlayerStatus.Up;
-            StartCoroutine(ClimbLeadder());
-            ClimbLeadder();
+            StartCoroutine(ClimbLadder());
+            ClimbLadder();
         }
         else if((Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow) ) && isNearLadderUp&& currentStatus != PlayerStatus.Up && currentStatus != PlayerStatus.Down){
             currentStatus = PlayerStatus.Down;
-            StartCoroutine(ClimbLeadder());
+            StartCoroutine(ClimbLadder());
         }
         
         MovePlayer();
     }
 
 
-    private IEnumerator ClimbLeadder(){
+    private IEnumerator ClimbLadder(){
         screenTransition.StartTransitionCoroutine();
         yield return new WaitForSeconds(0.85f);
 
@@ -86,7 +85,7 @@ public class PlayerMovement : MonoBehaviour
         RotatePlayerToDirection();
     }
 
-    private void StoptMoving(){
+    private void StopMoving(){
         moveVector = Vector2.zero;
         currentStatus = PlayerStatus.Idle;
     }
@@ -100,6 +99,11 @@ public class PlayerMovement : MonoBehaviour
                 transform.rotation = Quaternion.Euler(0,0,0);
                 break;
         }
+    }
+
+    private void AttackEnemy(){
+        // Play the animation
+
     }
 
 

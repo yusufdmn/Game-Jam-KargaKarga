@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using Microsoft.Unity.VisualStudio.Editor;
 using UnityEngine;
 
 public class CollectablePiece : MonoBehaviour

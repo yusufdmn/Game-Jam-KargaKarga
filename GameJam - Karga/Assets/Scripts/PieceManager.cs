@@ -1,31 +1,27 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
-
-
+using UnityEngine.SceneManagement;
+using DG.Tweening;
+ 
 public class PieceManager : MonoBehaviour
 {
+    private GameObject player;
 
-    GameObject player;
+    [SerializeField] RectTransform gameCanvasRect;
+    [SerializeField] RectTransform panelRect;
+    [SerializeField] InputManager inputManager;
+    [SerializeField] float maxCollectDistance;
+    [SerializeField] Ease ease;
+    [SerializeField] float animationDuration;
 
-  //  public UnityEvent OnCollected;
     public int collectedCount;
     public int maxCollectedCount_Level_1;
     public int maxCollectedCount_Level_2;
-    [SerializeField] InputManager inputManager;
-    [SerializeField] float maxCollectDistance;
+
 
     void Start()
     {
         inputManager.OnMouseClick.AddListener(DetectCollection);
         player = GameObject.FindGameObjectWithTag("player");
-    }
-
-
-    void Update()
-    {
-        
     }
 
     public void CollectPiece(GameObject piece){
@@ -44,6 +40,7 @@ public class PieceManager : MonoBehaviour
         }
         else if(collectedCount >= maxCollectedCount_Level_1){
             // Finish The Level
+            SceneManager.LoadScene(2);
         }
     }
 
@@ -54,6 +51,12 @@ public class PieceManager : MonoBehaviour
         {
             if (hit.collider.CompareTag("piece"))
             {
+                Vector2 canvasPosition;
+                Vector2 mousePos = Input.mousePosition;
+                RectTransformUtility.ScreenPointToLocalPointInRectangle(gameCanvasRect, mousePosition, null, out canvasPosition);
+
+
+                Debug.Log(canvasPosition);
                 CollectPiece(hit.collider.gameObject);
             }
         }

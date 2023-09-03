@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ScreenTransition : MonoBehaviour
@@ -12,11 +11,6 @@ public class ScreenTransition : MonoBehaviour
         panel.SetActive(false);     
     }
 
-
-    void Update()
-    {
-        
-    }
 
     public void StartTransitionCoroutine(){
         StartCoroutine(StartTransition());

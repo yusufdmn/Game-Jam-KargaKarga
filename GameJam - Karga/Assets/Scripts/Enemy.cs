@@ -1,8 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditor.Experimental.GraphView;
-using UnityEditor.Tilemaps;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
@@ -12,30 +7,25 @@ public class Enemy : MonoBehaviour
         Left,
         Right
     }
+
     private Direction direction;
-    float timer;
-   
-    bool isChasing;
-    bool isPlayerInRange;
-   
+    private bool isChasing;
+    private bool isPlayerInRange;
+    private float flipDuration;
+    private float timer;
+
     [SerializeField] float maxFlipDuration;
     [SerializeField] float minFlipDuration;
-    float flipDuration;
-
     [SerializeField] float speed;
-
-
     [SerializeField] EnemyAttack enemyAttack;
 
-    public float detectionRange = 5.0f;      // The range at which the enemy can detect the player.
-    public LayerMask playerLayer;            // The layer containing the player.
+    public float detectionRange = 5.0f;
+    public LayerMask playerLayer;
 
-    private Transform player;
 
     void Start()
     {
         flipDuration = Random.Range(minFlipDuration, maxFlipDuration);   
-        player = GameObject.FindGameObjectWithTag("player").transform;
     }
 
 
@@ -66,9 +56,6 @@ public class Enemy : MonoBehaviour
 
 
     void Flip(){
-      //  Vector3 scale = transform.localScale;
-     //   scale.x *= -1;
-
         if(direction == Direction.Left){
             direction = Direction.Right;
             transform.rotation = Quaternion.Euler(0, 180, 0);
@@ -97,23 +84,6 @@ public class Enemy : MonoBehaviour
             StopChasing();
         }
     }
-
-    
-
-
-   /* void OnTriggerEnter2D(Collider2D other){
-        if(other.gameObject.CompareTag("player")){
-            isPlayerInRange = true;
-            
-        }
-    }
-
-    void OnTriggerExit2D(Collider2D other){
-        if(other.gameObject.CompareTag("player")){
-            isPlayerInRange = false;
-            StopChasing();
-        }
-    }*/
 
 
     void Chase(){

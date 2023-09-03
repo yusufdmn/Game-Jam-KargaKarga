@@ -1,20 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyAttack : MonoBehaviour
-{
-
-    [SerializeField] int damage;
-    public bool isPlayerInAttackRange;
-
+{ 
+    private float timer;
+   
     [SerializeField] float attackDuration;
-    float timer;
+    [SerializeField] int damage;
 
-    void Start()
-    {
-        
-    }
+
+    public bool isPlayerInAttackRange;
 
 
     void Update()
