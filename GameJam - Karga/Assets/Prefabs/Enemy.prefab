@@ -100,8 +100,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7541bf9dde3289f43879b786ccc63856, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 0
-  maxHealth: 100
   maxFlipDuration: 4
   minFlipDuration: 1
   speed: 2
@@ -170,7 +168,7 @@ GameObject:
   - component: {fileID: 5286059400753168407}
   m_Layer: 0
   m_Name: Enemy Attack Hit
-  m_TagString: Untagged
+  m_TagString: enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

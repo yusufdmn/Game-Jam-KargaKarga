@@ -8,9 +8,6 @@ public class Enemy : MonoBehaviour
         Right
     }
 
-    public int health;
-    public int maxHealth = 100;
-
     private Direction direction;
     private bool isChasing;
     private bool isPlayerInRange;
@@ -30,7 +27,6 @@ public class Enemy : MonoBehaviour
     void Start()
     {
         enemyAnimator = GetComponent<Animator>();
-        health = maxHealth;
         flipDuration = Random.Range(minFlipDuration, maxFlipDuration);   
     }
 
@@ -53,13 +49,6 @@ public class Enemy : MonoBehaviour
             flipDuration = Random.Range(minFlipDuration, maxFlipDuration);  
             Flip();
             timer = 0;
-        }
-    }
-
-    public void Takedamage(int damage){
-        health -= damage;
-        if(health <= 0){
-            Die();
         }
     }
 
@@ -113,5 +102,11 @@ public class Enemy : MonoBehaviour
         enemyAnimator.SetBool("attack", false);
         isChasing = false;
     }
+    
+/*  private void OnTriggerEnter2D(Collider2D other){
+        if(other.CompareTag("knife")){
+            other.gameObject.SetActive(false);  
+        }
+    }*/
     
 }

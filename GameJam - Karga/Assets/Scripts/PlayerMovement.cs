@@ -23,15 +23,14 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 targetFloorPos;
     private float attackTimer;
 
-    [SerializeField] private float attackDuration;
     [SerializeField] private Animator playerAnimator;
     [SerializeField] private float speed;
     [SerializeField] private float damage;
     [SerializeField] InputManager inputManager;
     [SerializeField] ScreenTransition screenTransition;
-    [SerializeField] LayerMask WallLayer;
     [SerializeField] Transform rightWall;
     [SerializeField] Transform leftWall;
+    [SerializeField] GameObject knife;
 
     public PlayerStatus currentStatus; // 0 = left, 1 = right, 2 = Up , 3 = Down, 4 = Idle, 5 = Attack
 
@@ -117,11 +116,17 @@ public class PlayerMovement : MonoBehaviour
 
     private void AttackEnemy(){
         // Play the animation
+         StartCoroutine("ActivateKnife");
         AudioManager.Instance.PlayAttack();
         playerAnimator.SetTrigger("attack");
         currentStatus = PlayerStatus.Attack;
     }
 
+    IEnumerator ActivateKnife(){
+        knife.SetActive(true);
+        yield return new WaitForSeconds(0.5f);
+        knife.SetActive(false);
+    }
 
     private void OnTriggerEnter2D(Collider2D other) {     
 
