@@ -7,6 +7,8 @@ TagManager:
   - piece
   - player
   - enemy
+  - ladderBottom
+  - ladderUp
   layers:
   - Default
   - TransparentFX

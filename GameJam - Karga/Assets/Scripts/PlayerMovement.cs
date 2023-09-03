@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -12,14 +13,8 @@ public class PlayerMovement : MonoBehaviour
         Idle
     }
 
-
-  //  [SerializeField] InputManager inputManager;
-   // [SerializeField] Player player;
-
-    SpriteRenderer spriteRenderer;
-    [SerializeField] InputManager inputManager;
-    
-    private Transform playerTransform;
+    private bool isNearLadderUp;
+    private bool isNearLadderBottom;
     private Vector2 moveVector;
     private Vector2 leftVector = new Vector2(-1,0);
     private Vector2 rightVector = new Vector2(1,0);
@@ -27,13 +22,14 @@ public class PlayerMovement : MonoBehaviour
     public PlayerStatus currentStatus; // 0 = left, 1 = right, 2 = Up , 3 = Down, 4 = Idle
 
 
-
     [SerializeField] private float speed;
+    [SerializeField] InputManager inputManager;
 
+    [SerializeField] ScreenTransition screenTransition;
 
+    Vector2 targetFloorPos;
     void Start()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
 
@@ -49,7 +45,27 @@ public class PlayerMovement : MonoBehaviour
             StoptMoving();
         }
 
+
+        if((Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))  && isNearLadderBottom && currentStatus != PlayerStatus.Up && currentStatus != PlayerStatus.Down){
+            currentStatus = PlayerStatus.Up;
+            StartCoroutine(ClimbLeadder());
+            ClimbLeadder();
+        }
+        else if((Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow) ) && isNearLadderUp&& currentStatus != PlayerStatus.Up && currentStatus != PlayerStatus.Down){
+            currentStatus = PlayerStatus.Down;
+            StartCoroutine(ClimbLeadder());
+        }
+        
         MovePlayer();
+    }
+
+
+    private IEnumerator ClimbLeadder(){
+        screenTransition.StartTransitionCoroutine();
+        yield return new WaitForSeconds(0.85f);
+
+        transform.position = targetFloorPos;
+        currentStatus = PlayerStatus.Idle;  
     }
 
     private void MovePlayer(){
@@ -72,6 +88,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void StoptMoving(){
         moveVector = Vector2.zero;
+        currentStatus = PlayerStatus.Idle;
     }
 
     private void RotatePlayerToDirection(){
@@ -84,5 +101,29 @@ public class PlayerMovement : MonoBehaviour
                 break;
         }
     }
+
+
+    private void OnTriggerEnter2D(Collider2D other) {     
+
+        if(other.CompareTag("ladderBottom")){
+            targetFloorPos = other.transform.parent.GetChild(1).position;
+            isNearLadderBottom = true;
+        }
+        else if(other.CompareTag("ladderUp")){
+            targetFloorPos = other.transform.parent.GetChild(0).position;
+            isNearLadderUp = true;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other) {
+        
+        if(other.CompareTag("ladderBottom")){
+            isNearLadderBottom = false;
+        }
+        else if(other.CompareTag("ladderUp")){
+            isNearLadderUp = false;
+        }
+    }
+
 
 }
