@@ -78,7 +78,9 @@ public class PlayerMovement : MonoBehaviour
 
     private void MovePlayer(){
         transform.Translate(moveVector * speed * Time.deltaTime, Space.World);
-        transform.position = Mathf.Clamp(transform.position.x, leftWall.position.x, rightWall.position.x) * Vector2.right;
+        Vector2 pos = transform.position;
+        pos.x = Mathf.Clamp(transform.position.x, leftWall.position.x, rightWall.position.x);
+        transform.position = pos;
     }
 
     private void ChangeDirectionToRight(){
@@ -115,6 +117,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void AttackEnemy(){
         // Play the animation
+        AudioManager.Instance.PlayAttack();
         playerAnimator.SetTrigger("attack");
         currentStatus = PlayerStatus.Attack;
     }

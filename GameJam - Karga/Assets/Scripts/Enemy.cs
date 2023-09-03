@@ -8,6 +8,9 @@ public class Enemy : MonoBehaviour
         Right
     }
 
+    public int health;
+    public int maxHealth = 100;
+
     private Direction direction;
     private bool isChasing;
     private bool isPlayerInRange;
@@ -25,6 +28,7 @@ public class Enemy : MonoBehaviour
 
     void Start()
     {
+        health = maxHealth;
         flipDuration = Random.Range(minFlipDuration, maxFlipDuration);   
     }
 
@@ -50,7 +54,15 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    public void Takedamage(int damage){
+        health -= damage;
+        if(health <= 0){
+            Die();
+        }
+    }
+
     public void Die(){
+        AudioManager.Instance.PlayMonsterDie();
         Destroy(gameObject);
     }
 

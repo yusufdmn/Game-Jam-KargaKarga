@@ -9,6 +9,7 @@ TagManager:
   - enemy
   - ladderBottom
   - ladderUp
+  - mind
   layers:
   - Default
   - TransparentFX

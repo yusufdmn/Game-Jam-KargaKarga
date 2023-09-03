@@ -27,6 +27,7 @@ public class PieceManager : MonoBehaviour
     }
 
     public void CollectPiece(GameObject piece){
+        AudioManager.Instance.PlayCollectPiece();
         CollectablePiece collectablePiece = piece.GetComponent<CollectablePiece>();
 
         float distanceToPiece = (player.transform.position - piece.transform.position).magnitude;
