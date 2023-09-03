@@ -28,6 +28,12 @@ public class LevelManager : MonoBehaviour
 
 
     [SerializeField] GameObject pausePanel;
+
+
+    void Start(){
+        Time.timeScale = 1;
+    }
+
     public void FinishLevel(){
         successPanel.SetActive(true);
     }
