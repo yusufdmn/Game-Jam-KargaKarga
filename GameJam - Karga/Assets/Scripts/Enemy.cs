@@ -16,7 +16,8 @@ public class Enemy : MonoBehaviour
     private bool isPlayerInRange;
     private float flipDuration;
     private float timer;
-
+    private Animator enemyAnimator;
+    
     [SerializeField] float maxFlipDuration;
     [SerializeField] float minFlipDuration;
     [SerializeField] float speed;
@@ -28,6 +29,7 @@ public class Enemy : MonoBehaviour
 
     void Start()
     {
+        enemyAnimator = GetComponent<Animator>();
         health = maxHealth;
         flipDuration = Random.Range(minFlipDuration, maxFlipDuration);   
     }
@@ -99,6 +101,7 @@ public class Enemy : MonoBehaviour
 
 
     void Chase(){
+        enemyAnimator.SetBool("attack", true);
         isChasing = true;
 
         Vector2 chaseDirection = direction == Direction.Left ? Vector2.left : Vector2.right;
@@ -107,6 +110,7 @@ public class Enemy : MonoBehaviour
     }
 
     void StopChasing(){
+        enemyAnimator.SetBool("attack", false);
         isChasing = false;
     }
     
