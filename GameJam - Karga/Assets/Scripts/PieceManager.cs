@@ -7,13 +7,8 @@ public class PieceManager : MonoBehaviour
     private GameObject player;
 
     [SerializeField] LevelManager levelManager;
-    [SerializeField] GameObject pieceUIPrefab;
-    [SerializeField] RectTransform gameCanvasRect;
-    [SerializeField] RectTransform panelRect;
     [SerializeField] InputManager inputManager;
     [SerializeField] float maxCollectDistance;
-    [SerializeField] Ease ease;
-    [SerializeField] float animationDuration;
 
     public int collectedCount;
     public int maxCollectedCount_Level_1;
@@ -27,7 +22,7 @@ public class PieceManager : MonoBehaviour
     }
 
     public void CollectPiece(GameObject piece){
-        AudioManager.Instance.PlayCollectPiece();
+        
         CollectablePiece collectablePiece = piece.GetComponent<CollectablePiece>();
 
         float distanceToPiece = (player.transform.position - piece.transform.position).magnitude;

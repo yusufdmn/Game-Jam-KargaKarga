@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour
 {
+
     [SerializeField] Image healthBar;
 
     public int health;
@@ -29,6 +30,6 @@ public class PlayerHealth : MonoBehaviour
     }
 
     private void Die(){
-        SceneManager.LoadScene(0);
+        LevelManager.Instance.LevelFailed();
     }
 }
